@@ -1,3 +1,6 @@
+Link to Page: https://clientpanelprod-2bf90.firebaseapp.com
+To further check the features either register with an email(doesnt need verification), or just use this account to login `guest@gmail.com` `123456`
+
 # Clientpanel
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
