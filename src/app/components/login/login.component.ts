@@ -1,0 +1,51 @@
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  // properties we need 
+  email: string;
+  password: string;
+
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private flashMessage: FlashMessagesService
+  ) { }
+
+  ngOnInit() {
+    // checking if we are logged in and it returns an observable
+    this.authService.getAuth().subscribe(auth => {
+      if (auth) {
+        this.router.navigate(['/'])
+      }
+    })
+
+  }
+
+  onSubmit() {
+    this.authService.login(this.email, this.password)
+      //login returns a promise, so when we grab a promise return we use .then
+      .then(res => {
+        this.flashMessage.show('You are now logged in', {
+          cssClass: 'alert-success', timeout: 3000
+        });
+        this.router.navigate(['/'])
+      })
+      // if there's an error we use .catch to catch the err that we put in reject
+      .catch(err => {
+        this.flashMessage.show(err.message, {
+          cssClass: 'alert-danger', timeout: 3000
+        });
+      });
+  }
+
+}
